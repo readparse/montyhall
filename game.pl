@@ -23,13 +23,12 @@ while(1) {
 
 	if ($switch) {
 		$game->switch_choice;
-		print "Switched\n";
+		#print "Switched\n";
 	} else {
-		print "Did not switch\n";
+		#print "Did not switch\n";
 	}
 
 	my $winner = $game->winning_door;
-	print "Winning door is " . $winner->name . "\n";
 
 	if ($game->chosen_door->winner) {
 		if ($switch) {

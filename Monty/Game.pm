@@ -4,7 +4,11 @@ use Data::Dumper;
 use Moose;
 
 has door_count => ( is => 'rw', isa => 'Num', default => sub { 3 } );
-has doors => ( is => 'rw', traits => ['Array'], isa => 'ArrayRef[Monty::Door]', handles => { add_door => 'push'}, default => sub { [] } );
+has doors => ( 
+	is => 'rw', traits => ['Array'], 
+	isa => 'ArrayRef[Monty::Door]', 
+	handles => { add_door => 'push'}, default => sub { [] } 
+);
 has chosen_door => ( is => 'rw', isa => 'Monty::Door');
 
 sub BUILD {
@@ -47,16 +51,17 @@ sub choose {
 	if (my $door = $this->get_door_by_number(@_)) { 
 		$door->chosen(1);
 		$this->chosen_door($door);
-		print "Chosen door is now " . $this->chosen_door->number . "\n";
 	}
 }
 
 sub remaining_door {
 	my $this = shift;
 	for my $door (@{$this->doors}) {
-		next if $door->winner;
-		next if $door->chosen;
-		return $door;
+		if ($door->winner) {
+			return $door;
+		} elsif ($this->chosen_door->winner) {
+			return $door;
+		}
 	}
 }
 
