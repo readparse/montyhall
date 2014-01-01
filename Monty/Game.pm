@@ -87,4 +87,12 @@ sub winning_door {
 	}
 }
 
+sub choose_random { 
+	shift->choose( int(rand(3)) + 1 ) 
+}
+
+sub random_switch_decision {
+	return int(rand(2));
+}
+
 1;

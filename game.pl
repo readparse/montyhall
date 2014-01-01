@@ -17,27 +17,25 @@ while(1) {
 	my $game = Monty::Game->new();
 	#print "game on: $game\n";
 	
-	$game->choose( int(rand(3)) + 1 );
+	$game->choose_random;
 
-	my $switch = int(rand(2));
+	my $switch = $game->random_switch_decision;
 
 	if ($switch) {
 		$game->switch_choice;
-		#print "Switched\n";
-	} else {
-		#print "Did not switch\n";
 	}
 
 	my $winner = $game->winning_door;
 
 	if ($game->chosen_door->winner) {
+	 	$totals->{winner}++;
 		if ($switch) {
 			$totals->{winner_with_switch}++;
 		} else {
 			$totals->{winner_no_switch}++;
 		}
 	} else {
-
+	 	$totals->{loser}++;
 		if ($switch) {
 			$totals->{loser_with_switch}++;
 		} else {
